@@ -1,0 +1,89 @@
+[INFO] Cargando dataset: data/processed/dataset_riesgo.csv (82651 registros, 42 features)...
+[INFO] Conjunto Train: 65878 registros (target 2001–2020) | Conjunto Test: 16773 registros (target 2021–2025)
+
+[INFO] Entrenando Exp0 Persistencia (sin entrenamiento: nivel t+1 = nivel t)...
+[INFO] Entrenamiento finalizado en 0.00 segundos.
+[RESULTADOS EN TEST SET] Exp0 Persistencia
+              precision    recall  f1-score   support
+
+        Bajo     0.6564    0.6141    0.6345      7043
+       Medio     0.4033    0.4154    0.4093      5375
+        Alto     0.5109    0.5451    0.5274      4355
+
+    accuracy                         0.5325     16773
+   macro avg     0.5235    0.5249    0.5237     16773
+weighted avg     0.5375    0.5325    0.5345     16773
+
+[INFO] Train: acc=0.5158 f1_macro=0.5159 recall_alto=0.5535
+[INFO] Test:  acc=0.5325 f1_macro=0.5237 recall_alto=0.5451
+[INFO] Inferencia test: 0.0003 s (0.00002 ms/muestra)
+[INFO] Diagnóstico: Underfitting
+
+[INFO] Entrenando Exp1 LogisticRegression + StandardScaler (C=1.0, max_iter=1000)...
+[INFO] Entrenamiento finalizado en 5.16 segundos.
+[RESULTADOS EN TEST SET] Exp1 LogisticRegression
+              precision    recall  f1-score   support
+
+        Bajo     0.6577    0.7696    0.7092      7043
+       Medio     0.4463    0.3836    0.4126      5375
+        Alto     0.6061    0.5444    0.5736      4355
+
+    accuracy                         0.5874     16773
+   macro avg     0.5700    0.5659    0.5652     16773
+weighted avg     0.5766    0.5874    0.5790     16773
+
+[INFO] Train: acc=0.5728 f1_macro=0.5711 recall_alto=0.6149
+[INFO] Test:  acc=0.5874 f1_macro=0.5652 recall_alto=0.5444
+[INFO] Inferencia test: 0.0059 s (0.00035 ms/muestra)
+[INFO] Diagnóstico: Underfitting
+
+[SUCCESS] Escalador guardado en: models/scaler.joblib
+[SUCCESS] Modelo serializado con éxito en: models/modelo_baseline_lr.joblib
+
+[INFO] Entrenando Exp2 RandomForest por defecto (n_estimators=100, max_depth=None)...
+[INFO] Entrenamiento finalizado en 2.26 segundos.
+[RESULTADOS EN TEST SET] Exp2 RandomForest default
+              precision    recall  f1-score   support
+
+        Bajo     0.7214    0.5978    0.6538      7043
+       Medio     0.4175    0.4698    0.4421      5375
+        Alto     0.5598    0.6285    0.5922      4355
+
+    accuracy                         0.5647     16773
+   macro avg     0.5662    0.5653    0.5627     16773
+weighted avg     0.5821    0.5647    0.5699     16773
+
+[INFO] Train: acc=0.9961 f1_macro=0.9961 recall_alto=0.9964
+[INFO] Test:  acc=0.5647 f1_macro=0.5627 recall_alto=0.6285
+[INFO] Inferencia test: 0.0611 s (0.00364 ms/muestra)
+[INFO] Diagnóstico: Overfitting
+
+[INFO] Entrenando Exp3 RandomForest ajustado (GridSearchCV, TimeSeriesSplit(3), 36 combinaciones x 3 folds)...
+[INFO] Grid completo en 282.44 s (refit 12.72 s). best_params={'class_weight': None, 'max_depth': 8, 'max_features': 'sqrt', 'min_samples_leaf': 5} (f1_macro CV=0.5688)
+[INFO] Entrenamiento finalizado en 282.44 segundos.
+[RESULTADOS EN TEST SET] Exp3 RandomForest ajustado
+              precision    recall  f1-score   support
+
+        Bajo     0.7303    0.6313    0.6772      7043
+       Medio     0.4325    0.4569    0.4444      5375
+        Alto     0.5645    0.6489    0.6038      4355
+
+    accuracy                         0.5800     16773
+   macro avg     0.5758    0.5790    0.5751     16773
+weighted avg     0.5918    0.5800    0.5835     16773
+
+[INFO] Train: acc=0.5907 f1_macro=0.5912 recall_alto=0.6429
+[INFO] Test:  acc=0.5800 f1_macro=0.5751 recall_alto=0.6489
+[INFO] Inferencia test: 0.0598 s (0.00357 ms/muestra)
+[INFO] Diagnóstico: Underfitting
+
+[INFO] Ganador: Exp3 RandomForest ajustado (f1_macro test=0.5751)
+[SUCCESS] Modelo serializado con éxito en: models/modelo_candidato.joblib
+[RESULTADOS EN TEST SET] Matriz de confusión del ganador (Exp3 RandomForest ajustado):
+            pred_Bajo  pred_Medio  pred_Alto
+real_Bajo        4446        2037        560
+real_Medio       1299        2456       1620
+real_Alto         343        1186       2826
+
+[SUCCESS] Metadata actualizada en: models/metadata.json
+[SUCCESS] Verificación OK: artefactos presentes, predicciones en {0,1,2}, 4 experimentos en metrics.json.

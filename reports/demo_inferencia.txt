@@ -1,0 +1,80 @@
+[INFO] Modelo: RandomForestClassifier | ganador: Exp3 RandomForest ajustado | scaler: False
+
+=== Condado de riesgo alto (mayor composite_risk_score_ma3) ===
+[ENTRADA]
+{
+  "id_solicitud": "SOS-0001",
+  "county_fips": "48439",
+  "lat": null,
+  "lng": null
+}
+[SALIDA]
+{
+  "id_solicitud": "SOS-0001",
+  "county_fips": "48439",
+  "state": "TX",
+  "anio_base": 2026,
+  "anio_pronostico": 2027,
+  "nivel_riesgo": "Alto",
+  "clase_predicha": 2,
+  "probabilidades": {
+    "Bajo": 0.0082,
+    "Medio": 0.0302,
+    "Alto": 0.9616
+  },
+  "confianza": 96.16,
+  "requiere_revision": false,
+  "factores_clave": [
+    "Puntaje de riesgo compuesto (media histórica): 88.91 (p75 train: 57.22)",
+    "Puntaje de riesgo compuesto (media 5 años): 88.73 (p75 train: 58.47)",
+    "Puntaje de riesgo compuesto (media 3 años): 88.57 (p75 train: 59.07)"
+  ],
+  "tiempo_procesamiento_ms": 37.94,
+  "status": "success"
+}
+
+=== Condado de riesgo bajo (menor composite_risk_score_ma3) ===
+[ENTRADA]
+{
+  "id_solicitud": "SOS-0002",
+  "county_fips": 99117
+}
+[SALIDA]
+{
+  "id_solicitud": "SOS-0002",
+  "county_fips": "99117",
+  "state": "PR",
+  "anio_base": 2026,
+  "anio_pronostico": 2027,
+  "nivel_riesgo": "Bajo",
+  "clase_predicha": 0,
+  "probabilidades": {
+    "Bajo": 0.9302,
+    "Medio": 0.0601,
+    "Alto": 0.0097
+  },
+  "confianza": 93.02,
+  "requiere_revision": false,
+  "factores_clave": [
+    "Puntaje de riesgo compuesto (media histórica): 28.6 (p75 train: 57.22)"
+  ],
+  "tiempo_procesamiento_ms": 21.51,
+  "status": "success"
+}
+
+=== Condado inexistente ===
+[ENTRADA]
+{
+  "id_solicitud": "SOS-0003",
+  "county_fips": "99999"
+}
+[SALIDA]
+{
+  "id_solicitud": "SOS-0003",
+  "status": "error",
+  "mensaje": "Condado 99999 no encontrado en el feature store."
+}
+
+[SUCCESS] Asserts de forma OK
+[RESULTADOS] Latencia 100 llamadas: media = 12.07 ms | p95 = 22.02 ms
+[SUCCESS] p95 < 100 ms
